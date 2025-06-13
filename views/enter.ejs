@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+</head>
+<body>
+  <div style="margin-bottom: 40px;">
+    <%- include('menu.ejs') %> <!-- 별도의 EJS 파일로 분리한 menu를 불러옴 -->
+  </div>
+      <div class="container mt-4" style="max-width: 700px;">
+        <!-- 새 게시물 작성 폼 -->
+        <form id="postForm" action="/save" method="post" enctype="multipart/form-data">
+          <div class="form-group">
+              <label>제목</label>
+              <input type="text" name="title" class="form-control">
+          </div>
+          <p></p>
+          <!-- 게시물 내용 작성 필드 -->
+          <div class="form-group">
+              <label>내용</label>
+              <textarea name="content" rows="10" class="form-control"></textarea>
+          </div>
+          <p></p>
+          <!-- 게시물 작성일 선택 필드 -->
+          <div class="form-group">
+            <label>작성일</label>
+            <input type="date" class="form-control" name="someDate" id="someDate">
+          </div><p></p>
+          <!-- 파일 첨부 필드 -->
+          <div class="form-group">
+            <label>파일 첨부 (선택)</label>
+            <input type="file" name="file" accept=".txt,image/*" class="form-control">
+          </div><p></p>
+
+          <button type="submit" class="btn btn-warning" style="float:right">저장</button>
+        </form>
+      </div>
+
+      <script>
+        //작성일을 현재 날짜로 자동 설정
+        document.getElementById('someDate').valueAsDate = new Date();
+
+        //파일 첨부 유무에 따라 action 동적으로 변경
+        document.getElementById('postForm').addEventListener('submit', function (e) {
+          const fileInput = document.querySelector('input[type="file"]');
+          // 파일이 첨부된 경우 '/upload_file'로, 첨부되지 않은 경우 '/save'로 설정
+          const hasFile = fileInput && fileInput.files.length > 0;
+          this.action = hasFile ? '/upload_file' : '/save';
+        });
+      </script>
+</body>
+</html>

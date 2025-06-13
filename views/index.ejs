@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+      <style>
+        h5, h3{
+          text-align: center;
+        }
+        .list-group {
+          max-width: 600px;
+          margin: 0 auto 20px auto;
+        }
+
+        h5 {
+          margin: 30px; 
+        }
+
+        nav {
+          margin-bottom: 20px;
+        }
+
+        .post-item {
+          max-width: 600px;
+          margin-bottom: 20px;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+          background-color: #f9f9f906;
+        }
+        .post-title {
+          margin-top: 8px;
+          margin-bottom: 12px;
+          font-weight: bold;
+          color: #333;
+        }
+        .post-content {
+          line-height: 1.5;
+          margin-bottom: 15px;
+        }
+        .post-date {
+          color: #666;
+        }
+        .existN{
+          margin-top: 50px;
+          text-align: center;
+        }
+  </style>
+  </head>
+<body>
+  <%- include('menu.ejs') %> <!-- 별도의 EJS 파일로 분리한 menu를 불러옴 -->
+
+  <% if(user) { %>
+    <h3>반갑습니다. <%= user.userid %>님.</h3>
+  <% } %>
+  <h5>최신 게시물</h5>
+  
+  <% if (posts && posts.length > 0) { %> <!-- 게시물이 있을 경우 출력 -->
+    <div class="list-group">
+      <% posts.forEach(post => { %> <!-- 게시물 목록을 반복하여 출력 -->
+        <div class="list-group-item post-item">
+          <h6><%= post.userid %>님의 게시물</h6> <!-- 게시물 작성자의 id 출력 -->
+          <% if (post.title) { %> <!-- 제목이 있을 경우만 제목 출력 -->
+            <h6 class="post-title"><%= post.title %></h6>
+          <% } %>
+          <p class="post-content"><%= post.content %></p>
+          <% if (post.path) { %> <!-- 게시물에 이미지가 있을 경우 출력 -->
+            <img src="<%= post.path %>" alt="게시물 이미지" 
+            style="max-width: 100%; border-radius: 8px; margin-bottom: 10px;">
+          <% } %>
+          <p></p>
+          <small class="post-date">
+            <%= new Date(post.date).toLocaleString('ko-KR', 
+            { year: 'numeric', month: 'long', day: 'numeric' }) %>
+          </small>
+        </div>
+      <% }); %>
+    </div>
+  <% } else { %>
+    <p class="existN">친구들의 게시물이 없습니다.</p>
+  <% } %>
+</body>
+</html>

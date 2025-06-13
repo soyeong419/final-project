@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; 
+        margin: 0;
+      }
+      .container {
+        padding: 50px; 
+      }
+      form {
+        padding: 70px 100px 130px 100px;
+        max-width: 600px;
+        margin: 0 auto; 
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.178);
+        border-radius: 10px;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px; 
+        margin-bottom: 30px; 
+      }
+      label {
+        width: 80px; 
+        align-self: flex-start;
+        font-weight: 600;
+      }
+      input.form-control {
+        width: 100%; 
+        padding: 7px;
+      }
+      button.btn {
+        width: 100%;
+        padding: 17px 50px;
+        border-radius: 8px;
+        background-color: rgba(46, 157, 255, 0.89);
+        border: none; 
+        border-radius: 10px;
+        margin : 20px 0 50px 0;
+      }
+    </style>
+  </head>
+  <body>
+      <div class="container mt-4"> <!-- 폼을 담고 있는 컨테이너 -->
+        <form action="/signup" method="post"> <!-- 회원가입 폼 -->
+          <div class="form-group"> <!-- 아이디 입력 필드 -->
+              <label>아이디</label>
+              <input type="text" name="userid" class="form-control">
+          </div>
+          <div class="form-group"> <!-- 비밀번호 입력 필드 -->
+            <label>비밀번호</label>
+            <input type="password" name="userpwd" class="form-control">
+          </div>
+          <div class="form-group"> <!-- 소속 입력 필드 -->
+            <label>소속</label>
+            <input type="text" name="usergroup" class="form-control">
+          </div>
+          <div class="form-group"> <!-- 이메일 입력 필드 -->
+            <label>이메일</label>
+            <input type="text" name="useremail" class="form-control">
+          </div>
+          <button type="submit" class="btn btn-primary" style="float:right">가입</button>
+        </form>
+      </div>
+  </body>
+</html>

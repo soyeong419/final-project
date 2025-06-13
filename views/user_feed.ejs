@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= userid %>님의 게시물</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <%- include('menu.ejs') %> <!-- 별도의 EJS 파일로 분리한 menu를 불러옴 -->
+  <div class="container mt-4">
+    <h3><%= userid %>님의 게시물</h3> <!-- 사용자 id를 포함한 제목 표시 -->
+    <table class="table table-striped text-center mt-3">
+      <thead> <!-- 게시물 목록을 보여줄 표 -->
+        <tr>
+          <th>제목</th>
+          <th>작성일</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (data.length === 0) { %> <!-- 게시물이 없을 때 보여줄 메시지 -->
+          <tr><td colspan="2">게시물이 없습니다.</td></tr>
+        <% } %>
+        <% for (let i = 0; i < data.length; i++) { %> <!-- 게시물이 있을 때 각 게시물 정보를 테이블에 출력 -->
+          <tr> 
+            <!-- 게시물 제목에 링크를 걸어 상세보기로 이동 -->
+            <td><a href="/content/<%= data[i]._id %>"><%= data[i].title %></a></td>
+            <td><%= data[i].date %></td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

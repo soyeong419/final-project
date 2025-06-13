@@ -1,0 +1,64 @@
+const express = require('express');
+const app = express();
+
+const mongoclient = require('mongodb').MongoClient;
+const url = 'mongodb+srv://kuemokim:soyeong8290@cluster0.pah03no.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
+const ObjId = require('mongodb').ObjectId;
+
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended:true}));
+app.set('view engine', 'ejs'); //새로운 파일을 만드는 템플릿 엔진 
+
+
+let mydb;
+mongoclient
+    .connect(url)
+    .then((client) => {
+        mydb = client.db("myboard");
+        console.log("연결 성공");
+        app.listen(8080, function() {
+            console.log('포트 8080');
+        });
+    })
+    .catch((err) => {
+        console.log("연결실패", err);
+    });
+
+//'/E' 요청에 대한 처리 루틴
+app.get('/enter', function(req, res){
+    res.render('E.ejs');
+});
+
+app.post('/save', function(req, res){
+    console.log(req.body.title);
+    console.log(req.body.content);
+    console.log(req.body.someDate);
+    mydb.collection('post').insertOne(
+        {title: req.body.title, content: req.body.content, date: req.body.someDate}
+    ).then(result => {
+        console.log(result);
+        console.log("데이터 추가 성공");
+    });
+});
+
+//'L' 요청에 대한 처리 루틴
+app.get('/list', function(req, res){
+    mydb.collection('post').find().toArray().then(result=>{
+        console.log(result); //then.(function(err, result)) => 무한로딩
+    res.render('L.ejs', {data : result});
+    })
+});
+
+app.post('/delete', function(req, res){
+    console.log(req.body);
+    req.body._id = new ObjId(req.body._id);
+    mydb.collection('post').deleteOne(req.body)
+    .then(result =>{
+        console.log('삭제완료');
+        res.status(200).send();
+    })
+    .catch(err=>{
+        console.log(err);
+        res.status(500).send();
+    });
+});

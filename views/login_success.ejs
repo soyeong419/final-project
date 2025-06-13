@@ -1,0 +1,49 @@
+<!-- views/success.ejs -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .login {
+      padding: 60px;
+      width: 360px;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.178);
+      border-radius: 10px;
+    }
+    .login h4 {
+      margin-bottom: 20px;
+      margin-left: 20px;
+      color: rgba(46, 157, 255, 0.89);
+      font-size: 20px;
+    }
+    .login p {
+      margin: 10px 0;
+      margin-left: 20px;
+    }
+    .login .notice {
+      margin: 25px 0 30px 20px;
+      color: #9c9c9c;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login">
+    <h4>로그인 성공</h4> <!-- 로그인 성공 메시지 -->
+    <p><%= userid %>님 반갑습니다.</p> <!-- 로그인한 사용자의 id를 출력 -->
+    <p class="notice">5초 뒤에 자동으로 웹페이지로 이동합니다 ···</p>
+  </div>
+  <script>
+    setTimeout(() => { //5초 후 페이지 자동 리디렉션
+      location.href = '/index';
+    }, 5000);
+  </script>
+</body>
+</html>
