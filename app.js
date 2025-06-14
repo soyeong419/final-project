@@ -7,6 +7,7 @@ const bodyParser = require('body-parser'); //http 요청 본문 파싱 미들웨
 const cookieParser = require('cookie-parser'); //쿠키 파싱 미들웨어
 const session = require('express-session'); //세션 처리 미들웨어
 const ObjId = require('mongodb').ObjectId; //MongoDB의 ObjectId 타입 사용
+const path = require('path'); //경로 관련 모듈 불러오기
 
 //라우터 모듈 불러오기
 const indexRouter = require('./routes/indexR');
@@ -51,6 +52,16 @@ mongoclient.connect(url).then(client =>{
     req.ObjId = ObjId;
     next();
     });
+
+    app.get('/start', (req, res) => {
+      console.log('/start 요청 들어옴');
+      res.sendFile(path.join(__dirname, 'public', 'start.html'), (err) => {
+        if (err) {
+          console.error('sendFile 에러:', err);
+          res.status(err.status).end();
+        }
+      });
+    });     
 
     //라우터 등록
     app.use('/', indexRouter);
